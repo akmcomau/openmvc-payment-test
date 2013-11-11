@@ -23,7 +23,7 @@ class PaymentTest extends Controller {
 		$checkout = $order->purchase();
 
 		$enc_checkout_id = Encryption::obfuscate($checkout->id, $this->config->siteConfig()->secret);
-		throw new RedirectException($this->url->getURL('Checkout', 'receipt', [$enc_checkout_id]));
+		throw new RedirectException($this->url->getUrl('Checkout', 'receipt', [$enc_checkout_id]));
 	}
 
 }
