@@ -18,9 +18,12 @@ class PaymentTest extends Controller {
 	];
 
 	public function payment() {
+		$this->language->loadLanguageFile('checkout.php', 'modules'.DS.'checkout');
+
 		$cart  = new CartContents($this->config, $this->database, $this->request);
 		$order = new Order($this->config, $this->database, $cart);
 		$checkout = $order->purchase();
+		$order->sendOrderEmails($checkout, $this->language);
 
 		$enc_checkout_id = Encryption::obfuscate($checkout->id, $this->config->siteConfig()->secret);
 		throw new RedirectException($this->url->getUrl('Checkout', 'receipt', [$enc_checkout_id]));
