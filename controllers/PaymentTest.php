@@ -62,6 +62,10 @@ class PaymentTest extends Controller {
 		$order->sendOrderEmails($checkout, $this->language);
 		$cart->clear();
 
+		if ($checkout->anonymous) {
+			$this->request->session->set('anonymous_checkout_purchase', TRUE);
+		}
+
 		$enc_checkout_id = Encryption::obfuscate($checkout->id, $this->config->siteConfig()->secret);
 		throw new RedirectException($this->url->getUrl('Checkout', 'receipt', [$enc_checkout_id]));
 	}
