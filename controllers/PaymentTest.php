@@ -58,7 +58,15 @@ class PaymentTest extends Controller {
 		$address->country_id         = $australia->id;
 
 		// purchase the order
+		$status = $model->getModel('\modules\checkout\classes\models\CheckoutStatus');
 		$checkout = $order->purchase($customer, $address, $address);
+		if ($checkout->shipping_address_id) {
+			$checkout->status_id = $status->getStatusId('Processing');
+		}
+		else {
+			$checkout->status_id = $status->getStatusId('Complete');
+		}
+		$checkout->update();
 		$order->sendOrderEmails($checkout, $this->language);
 		$cart->clear();
 

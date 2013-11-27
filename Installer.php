@@ -30,7 +30,7 @@ class Installer {
 		$config = $this->config->getSiteConfig();
 		$config['sites'][$this->config->getSiteDomain()]['checkout']['payment_methods']['test'] = [
 			'name' => 'Test Deposit',
-			'controller' => '\modules\payment_test\controllers\PaymentTest',
+			'public' => '\modules\payment_test\controllers\PaymentTest',
 		];
 		$this->config->setSiteConfig($config);
 	}
