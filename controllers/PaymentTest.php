@@ -16,6 +16,10 @@ class PaymentTest extends Controller {
 	protected $permissions = [
 	];
 
+	public function getAllUrls($include_filter = NULL, $exclude_filter = NULL) {
+		return [];
+	}
+
 	public function payment() {
 		$model = new Model($this->config, $this->database);
 		$this->language->loadLanguageFile('customer.php');
