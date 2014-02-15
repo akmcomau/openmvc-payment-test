@@ -38,15 +38,38 @@ class PaymentTest extends Controller {
 		$australia = $model->getModel('\core\classes\models\Country')->get([
 			'code' => 'AU'
 		]);
+		if (!$australia) {
+			$australia = $model->getModel('\core\classes\models\Country', [
+				'country_code' => 'AU',
+				'country_name' => 'Australia',
+			]);
+			$australia->insert();
+		}
 		$qld = $model->getModel('\core\classes\models\State')->get([
 			'country_id' => $australia->id,
 			'name' => 'Queensland',
 		]);
+		if (!$qld) {
+			$qld = $model->getModel('\core\classes\models\State', [
+				'country_id' => $australia->id,
+				'state_name' => 'Queensland',
+				'state_abbrev' => 'QLD',
+			]);
+			$qld->insert();
+		}
 		$brisbane = $model->getModel('\core\classes\models\City')->get([
 			'country_id' => $australia->id,
 			'state_id' => $qld->id,
 			'name' => 'Brisbane',
 		]);
+		if (!$brisbane) {
+			$brisbane = $model->getModel('\core\classes\models\City', [
+				'country_id' => $australia->id,
+				'state_id' => $qld->id,
+				'city_name' => 'Brisbane',
+			]);
+			$brisbane->insert();
+		}
 		$address = $model->getModel('\core\classes\models\Address');
 		$address->address_first_name = 'Joe';
 		$address->address_last_name  = 'Bloggs';
