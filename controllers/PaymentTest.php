@@ -86,7 +86,7 @@ class PaymentTest extends Controller {
 
 		// purchase the order
 		$status = $model->getModel('\modules\checkout\classes\models\CheckoutStatus');
-		$checkout = $order->purchase($customer, $address, $address);
+		$checkout = $order->purchase('test', $customer, $address, $address);
 		if ($checkout->shipping_address_id) {
 			$checkout->status_id = $status->getStatusId('Processing');
 		}
